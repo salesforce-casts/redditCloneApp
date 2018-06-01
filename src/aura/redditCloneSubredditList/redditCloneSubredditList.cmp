@@ -1,9 +1,10 @@
-<aura:component controller="redditCloneHomePageController" implements="force:appHostable">
+<aura:component controller="redditCloneHomePageController" implements="force:appHostable,lightning:isUrlAddressable">
     
     <aura:attribute name="allSubreddits" type="subreddit__c[]" />
     
     <aura:handler name="init" value="{!this}" action="{!c.fetchAllSubReddits}" />  
     
+    <lightning:navigation aura:id="navToSubredDetails" />
     
     <div class="slds-grid slds-wrap slds-gutters">
         <aura:iteration items="{!v.allSubreddits}" var="sreddit">
@@ -11,7 +12,9 @@
             <div class="slds-col slds-size_4-of-12 slds-m-bottom_medium">
                 <lightning:card footer="">
                     <p class="slds-p-horizontal_medium slds-align_absolute-center">
-                        <a onclick="{!c.goToSubreddit}"> <strong> {!sreddit.Name} </strong> </a>
+                        <div onclick="{!c.goToSubreddit}" data-id="{!sreddit.Id}">
+                        	<a> <strong> {!sreddit.Name} </strong> </a>
+                        </div>
                     </p>
                     <div class="slds-p-top_small">
                         <p>{!sreddit.Title__C}</p> <br />
