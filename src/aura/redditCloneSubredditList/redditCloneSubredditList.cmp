@@ -1,0 +1,30 @@
+<aura:component controller="redditCloneHomePageController" implements="force:appHostable">
+    
+    <aura:attribute name="allSubreddits" type="subreddit__c[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.fetchAllSubReddits}" />  
+    
+    
+    <div class="slds-grid slds-wrap slds-gutters">
+        <aura:iteration items="{!v.allSubreddits}" var="sreddit">
+            
+            <div class="slds-col slds-size_4-of-12 slds-m-bottom_medium">
+                <lightning:card footer="">
+                    <p class="slds-p-horizontal_medium slds-align_absolute-center">
+                        <a onclick="{!c.goToSubreddit}"> <strong> {!sreddit.Name} </strong> </a>
+                    </p>
+                    <div class="slds-p-top_small">
+                        <p>{!sreddit.Title__C}</p> <br />
+                        <p>{!sreddit.Description__c}</p>
+                    </div>
+                    <footer class="slds-card__footer">
+                        <p>Since <lightning:formattedDateTime value="{!sreddit.CreatedDate}" 
+                                                              year="2-digit" month="short" 
+                                                              day="2-digit" weekday="long"/> </p>
+                        
+                    </footer>
+                </lightning:card>
+            </div>
+        </aura:iteration>
+    </div>
+</aura:component>

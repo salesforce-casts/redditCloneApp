@@ -1,0 +1,4 @@
+<aura:component controller="redditCloneHomePageController" implements="force:appHostable">
+    
+    <c:redditCloneCreateSubredditPopup />
+</aura:component>

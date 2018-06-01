@@ -1,0 +1,59 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId">
+    
+    <aura:attribute name="newSubredditRecord" type="Object"/>
+    <aura:attribute name="simpleNewSubreddit" type="Object"/>
+    <aura:attribute name="newSubredditError" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.createSubReddit}" />
+    
+    <force:recordData aura:id="newSubreddit" 
+                      layoutType="FULL"
+                      targetRecord="{!v.newSubredditRecord}"
+                      targetFields="{!v.simpleNewSubreddit}" 
+                      targetError="{!v.newSubredditError}"
+                      />
+    
+    <lightning:button label="New Subreddit" 
+                      class="slds-button_outline-brand slds-m-bottom_xx-large slds-align_absolute-center slds-p-around_medium" 
+                      onclick="{!c.openSubredditPopup}"/>
+    
+    
+    <c:redditCloneSubredditList />
+    
+    <div class="demo-only" style="height: 640px;">
+        <section aura:id="dailogId" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.toggleDialog}">
+                        <lightning:icon iconName="utility:close" alternativeText="Close" />
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Subreddit</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning:card iconName="action:flow" title="Create Subreddit">
+                        <div class="slds-p-horizontal--small">
+                            <lightning:input aura:id="subRedditName" label="" value="{!v.simpleNewSubreddit.Name}" placeholder="Subreddit Name"/>
+                            <lightning:input aura:id="subRedditTitle" label="Title" placeholder="Subreddit Title" value="{!v.simpleNewSubreddit.Title__c}"/>
+                            <lightning:textarea aura:id="subRedditDescription" label="Description" placeholder="Description" value="{!v.simpleNewSubreddit.Description__c}"/>
+                        </div>
+                    </lightning:card>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.toggleDialog}">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick="{!c.handleSaveSubreddit}">Save</button>
+                </footer>
+            </div>
+        </section>
+        <div aura:id="overlayId" class="slds-backdrop"></div>
+    </div>
+    
+    <!-- Display Lightning Data Service errors -->
+    <aura:if isTrue="{!not(empty(v.newSubredditError))}">
+        <div class="recordError">
+            {!v.newSubredditError}</div>
+    </aura:if>
+    
+</aura:component>
