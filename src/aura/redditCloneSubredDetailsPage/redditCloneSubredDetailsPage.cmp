@@ -2,15 +2,55 @@
                 implements="force:appHostable,lightning:isUrlAddressable">
     
     <aura:attribute name="subRedDetails" type="subreddit__c" />
+    <aura:attribute name="upvote" default="false" type="Boolean" />
+    <aura:attribute name="downvote" default="false" type="Boolean" />
+    <aura:attribute name="subRedPostedDate" type="Object"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     
-    <lightning:card>
-        {!v.subRedDetails.Name} <br />
-        {!v.subRedDetails.Title__c}<br />
-        {!v.subRedDetails.Description__c}<br />
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning:icon iconName="action:flow" alternativeText="subredditName" />
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <span>
+                    
+                    
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_10-of-12">
+                            <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!v.subRedDetails.Name}">{!v.subRedDetails.Name}</h1>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <button class="slds-button slds-button_neutral">New Post</button>
+                        </div>
+                    </div>
+                </span>                
+                <p class="slds-text-body_small slds-line-height_reset">Created • <lightning:relativeDateTime value="{! v.subRedPostedDate }"/></p>
+                <p class="slds-m-top_x-small">{!v.subRedDetails.Description__c}</p>
+            </div>
+        </div>
+    </div>
     
-    </lightning:card>
+    
+    
+    
+    
+    <!-- 
+  <div class="upAndDownVote">
+            
+            <lightning:buttonIconStateful iconName="utility:chevronup" aura:id="upvote" 
+                                          alternativeText="upvote" class="upvoteCustom slds-m-bottom_x-small"
+                                          selected="{! v.upvote }" onclick="{!c.upVoteHandler}"/>
+            
+            <lightning:buttonIconStateful iconName="utility:chevrondown" aura:id="downvote"
+                                          alternativeText="downvote" class="downvoteCustom slds-m-top_x-small" 
+                                          selected="{! v.downvote }" onclick="{!c.downVoteHandler}"/> 
+            
+        </div>
+  -->
     
     
 </aura:component>

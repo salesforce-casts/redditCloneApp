@@ -1,0 +1,23 @@
+.THIS {
+}
+.THIS .upAndDownVote{
+	float: left;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+.THIS .upvoteCustom{
+    display:block;
+	cursor: pointer;
+}
+
+.THIS .downvoteCustom{
+    cursor: pointer;
+}
+
+.THIS .upvoteActive svg{
+	fill: blue;
+}
+
+.THIS .downActive svg{
+	fill: red;
+}
