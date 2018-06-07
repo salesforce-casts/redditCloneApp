@@ -1,0 +1,35 @@
+<aura:component controller="redditCloneSubredDetailsController" 
+                implements="force:appHostable,lightning:isUrlAddressable">
+    
+    <aura:handler name="change" value="{!v.abc}" action="{!c.doSoChange}" />
+    
+    <aura:attribute name="upvote" default="false" type="Boolean" />
+    <aura:attribute name="downvote" default="false" type="Boolean" />
+    <aura:attribute name="abc" type="Id" default=""/>
+    
+    <aura:attribute name="allSubredPosts" type="post__c[]"/>
+    
+    
+	
+    
+    <aura:iteration items="{!v.allSubredPosts}" var="post">
+        <lightning:card footer="">
+            <div class="upAndDownVote">
+            
+            <lightning:buttonIconStateful iconName="utility:chevronup" aura:id="upvote" 
+                                          alternativeText="upvote" class="upvoteCustom slds-m-bottom_x-small"
+                                          selected="{! v.upvote }" onclick="{!c.upVoteHandler}"/>
+            
+            <lightning:buttonIconStateful iconName="utility:chevrondown" aura:id="downvote"
+                                          alternativeText="downvote" class="downvoteCustom slds-m-top_x-small" 
+                                          selected="{! v.downvote }" onclick="{!c.downVoteHandler}"/> 
+            
+        </div>
+            {!post.title__c}<br />
+            {!post.body__c}<br />
+            <lightning:formattedText value="{!post.body__c}" />
+        </lightning:card>
+    </aura:iteration>
+   
+    
+</aura:component>

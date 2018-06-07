@@ -13,7 +13,7 @@
                 <lightning:card footer="">
                     <p class="slds-p-horizontal_medium slds-align_absolute-center">
                         <div onclick="{!c.goToSubreddit}" data-id="{!sreddit.Id}">
-                        	<a> <strong> {!sreddit.Name} </strong> </a>
+                            <a> <strong> {!sreddit.Name} </strong> </a>
                         </div>
                     </p>
                     <div class="slds-p-top_small">
