@@ -1,0 +1,41 @@
+<aura:component controller="redditCloneSubredDetailsController" 
+                implements="force:appHostable,lightning:isUrlAddressable">
+    
+    <aura:attribute name="subRedDetails" type="subreddit__c" />
+    <aura:attribute name="subRedPostDate" type="Object" />
+    <aura:attribute name="subredId" type="Id" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning:icon iconName="action:flow" alternativeTest="subredditName" />
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <span>
+                	<div class="slds-grid slds-wrap">
+                    	<div class="slds-col slds-size_10-of-12">
+                			<h1 class="slds-page-header__title slds-truncate slds-align-middle" 
+                                title="{!v.subRedDetails.Name}"> {!v.subRedDetails.Name}</h1>        
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <button class="slds-button slds-button_neutral"> New Post</button>
+                        </div>
+                    </div>
+                </span>
+                
+                <p class="slds-text-body_small slds-line-height_reset">Created • 
+                    <lightning:relativeDateTime value="{!v.subRedPostDate}" />
+				</p>
+                <p class="slds-m-top_x-small">{!v.subRedDetails.Description__c}</p>
+            </div>
+        </div>
+    </div>
+    
+    <c:allPostsOfASubred subredId="{!v.subRedDetails.Id}"/>
+    
+</aura:component>

@@ -1,0 +1,17 @@
+.THIS {
+}
+
+.THIS .upAndDownVote{
+    float: left;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.THIS .upvoteCustom{
+    display: block;
+    cursor: pointer;
+}
+
+.THIS .downvoteCustom{
+    cursor: pointer;
+}
