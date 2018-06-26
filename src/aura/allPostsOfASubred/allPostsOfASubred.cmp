@@ -3,32 +3,36 @@
     
     <aura:attribute name="subredId" type="Id" />
     <aura:attribute name="allSubredPosts" type="post__c" />
-    <aura:attribute name="upvote" default="false" type="Boolean" />
-    <aura:attribute name="downvote" default="false" type="Boolean" />
+    
+    <aura:attribute name="upvote" type="Boolean" default="false"/>
+    <aura:attribute name="downvote" type="Boolean" default="false" />
+    
     <aura:handler name="change" value="{!v.subredId}" action="{!c.doChange}" />
-    
-    <aura:iteration items="{!v.allSubredPosts}" var="post">
-        <lightning:card footer="">
-            
-            <div class="upAndDownVote">
-                <div data-id="{!post.Id}" onclick="{!c.upVoteHandler}">
-                    <lightning:buttonIconStateful iconName="utility:chevronup" aura:id="upvote" 
-                                                  alternativeText="upvote" 
-                                                  class="upvoteCustom slds-m-bottom_x-small"
-                                                  selected="{! v.upvote }" />
-                </div> 
-                
-                
-                <lightning:buttonIconStateful iconName="utility:chevrondown" aura:id="downvote"
-                                              alternativeText="downvote" 
-                                              class="downvoteCustom slds-m-top_x-small" 
-                                              selected="{! v.downvote }" onclick="{!c.downVoteHandler}"/> 
-                
-            </div>
-            {!post.Name} <br/>
-            {!post.Title__c} <br/>
-            {!post.body__c} <br/>
-        </lightning:card>
-    </aura:iteration> 
-    
+    <div aura:id="main">
+        <aura:iteration items="{!v.allSubredPosts}" var="post">
+            <lightning:card footer="">
+                <div class="upAndDownVote">
+                    <div onclick="{!c.upVoteHandler}" data-id="{!post.Id}" aura:id="upvote" class="upvoteIconNeutral"> 
+                        <lightning:icon iconName="utility:chevronup" size="x-small" />
+                    </div>
+                    
+                    <lightning:buttonIconStateful iconName="utility:chevrondown" 
+                                                  aura:id="downvote"
+                                                  alternativeText="downvote" 
+                                                  class="downvoteCustom"
+                                                  name="{!post.Id}"
+                                                  value="{!post.Id}" 
+                                                  selected="{!v.downvote}"
+                                                  onclick="{!c.downVoteHandler}"/>
+                    
+                </div>
+                <div onclick="{!c.openPostPopup}" data-id="{!post.Id}">
+                    <a>{!post.Name}</a>
+                </div>
+                {!post.Title__c} <br/>
+                {!post.body__c} <br/>
+            </lightning:card>
+        </aura:iteration>
+    </div>
+    <c:postDetailsPopup />
 </aura:component>
