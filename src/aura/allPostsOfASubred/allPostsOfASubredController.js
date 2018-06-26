@@ -30,6 +30,9 @@
         
         var targetElement = event.target;
         
+        $A.util.addClass(event.target.nextSibling,"upvoteIconNeutral"); 
+        $A.util.removeClass(event.target.nextSibling,"upvoteIconBlue");
+        
         $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
         $A.util.addClass(targetElement,"upvoteIconBlue");
         
@@ -59,10 +62,18 @@
     },
     
     downVoteHandler : function(component, event, helper) {
-        if(component.get('v.upvote')){
-        	component.set('v.upvote', false);    
-        }
-        component.set('v.downvote', true);
+       
+        console.log(event.target.previousSibling);
+        var ctarget = event.currentTarget;
+        var id_str = ctarget.dataset.id;
+        
+        var targetElement = event.target;
+        
+        $A.util.addClass(event.target.previousSibling,"upvoteIconNeutral"); 
+        $A.util.removeClass(event.target.previousSibling,"upvoteIconBlue");
+        
+        $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+        $A.util.addClass(targetElement,"upvoteIconBlue");
         
     },
     showDetail: function(component, event, helper) {

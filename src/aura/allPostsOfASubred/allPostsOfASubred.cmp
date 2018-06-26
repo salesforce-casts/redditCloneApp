@@ -16,15 +16,11 @@
                         <lightning:icon iconName="utility:chevronup" size="x-small" />
                     </div>
                     
-                    <lightning:buttonIconStateful iconName="utility:chevrondown" 
-                                                  aura:id="downvote"
-                                                  alternativeText="downvote" 
-                                                  class="downvoteCustom"
-                                                  name="{!post.Id}"
-                                                  value="{!post.Id}" 
-                                                  selected="{!v.downvote}"
-                                                  onclick="{!c.downVoteHandler}"/>
+                    <div onclick="{!c.downVoteHandler}" data-id="{!post.Id}" aura:id="downvote" class="upvoteIconNeutral"> 
+                        <lightning:icon iconName="utility:chevrondown" size="x-small" />
+                    </div>
                     
+                   
                 </div>
                 <div onclick="{!c.openPostPopup}" data-id="{!post.Id}">
                     <a>{!post.Name}</a>
