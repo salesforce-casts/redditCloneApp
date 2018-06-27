@@ -1,6 +1,6 @@
 ({
-	doChange : function(component, event, helper) {
-		var subred_id = component.get("v.subredId");
+    doChange : function(component, event, helper) {
+        var subred_id = component.get("v.subredId");
         
         var action = component.get("c.fetchAllPostsOfASubred");
         
@@ -9,10 +9,11 @@
         });
         
         action.setCallback(this, function(response){
-        	var state =response.getState();
+            var state =response.getState();
             if(state === "SUCCESS"){
                 var allSubredPosts = response.getReturnValue();
                 component.set("v.allSubredPosts", allSubredPosts);
+                //helper.createUpvoteDownvote(allSubredPosts);
             }else{
                 
             }
@@ -20,19 +21,67 @@
         });
         
         $A.enqueueAction(action);
-	},
-    
-    upVoteHandler : function(component, event, helper) {
-        if(component.get('v.downvote')){
-        	component.set('v.downvote', false);    
-        }
-        component.set('v.upvote', true);
     },
     
-	downVoteHandler : function(component, event, helper) {
-        if(component.get('v.upvote')){
-        	component.set('v.upvote', false);    
+    upVoteHandler : function(component, event, helper) {
+        
+        var ctarget = event.currentTarget;
+        var rec_id = ctarget.dataset.id;
+        var subred_id = component.get("v.subredId");
+        var targetElement = event.target;
+        
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            //Upvote the post
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue");
+            helper.upvoteAPostHandler(component, rec_id);
+            
+            //Remove the existing downvote to the post
+            if(event.target.nextSibling.classList.contains("upvoteIconBlue")){
+                $A.util.addClass(event.target.nextSibling,"upvoteIconNeutral"); 
+                $A.util.removeClass(event.target.nextSibling,"upvoteIconBlue");
+                helper.downvoteAPostHandler(component, rec_id);
+            }
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            //Remove the upvote to the post
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue");
+            helper.removeUpvoteToPostHandler(component, rec_id);
+        }else{
+            
         }
-        component.set('v.downvote', true);
+        
+    },
+    
+    downVoteHandler : function(component, event, helper) {
+        
+        var ctarget = event.currentTarget;
+        var rec_id = ctarget.dataset.id;
+        var subred_id = component.get("v.subredId");
+        var targetElement = event.target;
+        
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            //downvote the post
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue");
+            helper.downvoteAPostHandler(component, rec_id);
+            
+            //Remove the existing downvote to the post
+            if(event.target.previousSibling.classList.contains("upvoteIconBlue")){
+                $A.util.addClass(event.target.previousSibling,"upvoteIconNeutral"); 
+                $A.util.removeClass(event.target.previousSibling,"upvoteIconBlue");
+                helper.removeUpvoteToPostHandler(component, rec_id);
+            }
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            //Remove the upvote to the post
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue");
+            helper.removeDownvoteToPostHandler(component, rec_id);
+        }else{
+            
+        }
+        
+        
+        
     }
 })
