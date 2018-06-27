@@ -13,7 +13,6 @@
             if(state === "SUCCESS"){
                 var allSubredPosts = response.getReturnValue();
                 component.set("v.allSubredPosts", allSubredPosts);
-                //helper.createUpvoteDownvote(allSubredPosts);
             }else{
                 
             }
@@ -22,19 +21,26 @@
         
         $A.enqueueAction(action);
     },
-    
     upVoteHandler : function(component, event, helper) {
         
         var ctarget = event.currentTarget;
         var id_str = ctarget.dataset.id;
         
         var targetElement = event.target;
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue"); 
+            
+            $A.util.addClass(event.target.nextSibling,"upvoteIconNeutral"); 
+            $A.util.removeClass(event.target.nextSibling,"upvoteIconBlue");
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue"); 
+        }else{
+            
+        }
         
-        $A.util.addClass(event.target.nextSibling,"upvoteIconNeutral"); 
-        $A.util.removeClass(event.target.nextSibling,"upvoteIconBlue");
         
-        $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
-        $A.util.addClass(targetElement,"upvoteIconBlue");
         
         /**
         var arr = [];
@@ -62,28 +68,27 @@
     },
     
     downVoteHandler : function(component, event, helper) {
-       
+        
         console.log(event.target.previousSibling);
         var ctarget = event.currentTarget;
         var id_str = ctarget.dataset.id;
         
         var targetElement = event.target;
         
-        $A.util.addClass(event.target.previousSibling,"upvoteIconNeutral"); 
-        $A.util.removeClass(event.target.previousSibling,"upvoteIconBlue");
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue");
+            
+            $A.util.addClass(event.target.previousSibling,"upvoteIconNeutral"); 
+            $A.util.removeClass(event.target.previousSibling,"upvoteIconBlue");
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue"); 
+        }else{
+            
+        }
         
-        $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
-        $A.util.addClass(targetElement,"upvoteIconBlue");
+        
         
     },
-    showDetail: function(component, event, helper) {
-        var arr = [];
-        arr = component.find("main").getElement().childNodes;
-        console.log(component.find("main").getElement().childNodes);
-        for(var cmp in component.find("main").getElement().childNodes) {
-            $A.util.removeClass(arr[cmp], "selectedRow");
-        }
-        var targetElement = event.target;
-        $A.util.addClass(targetElement,"selectedRow");
-    }
 })
