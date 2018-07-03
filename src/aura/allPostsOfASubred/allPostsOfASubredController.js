@@ -1,6 +1,6 @@
 ({
-	doChange : function(component, event, helper) {
-		var subred_id = component.get("v.subredId");
+    doChange : function(component, event, helper) {
+        var subred_id = component.get("v.subredId");
         
         var action = component.get("c.fetchAllPostsOfASubred");
         
@@ -9,7 +9,7 @@
         });
         
         action.setCallback(this, function(response){
-        	var state =response.getState();
+            var state =response.getState();
             if(state === "SUCCESS"){
                 var allSubredPosts = response.getReturnValue();
                 component.set("v.allSubredPosts", allSubredPosts);
@@ -20,19 +20,43 @@
         });
         
         $A.enqueueAction(action);
-	},
-    
+    },
     upVoteHandler : function(component, event, helper) {
-        if(component.get('v.downvote')){
-        	component.set('v.downvote', false);    
+        
+        var targetElement = event.target;
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue"); 
+            if(event.target.nextSibling.classList.contains("upvoteIconNeutral")){
+                $A.util.addClass(event.target.nextSibling,"upvoteIconNeutral"); 
+                $A.util.removeClass(event.target.nextSibling,"upvoteIconBlue");
+            }
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue"); 
+        }else{
+            
         }
-        component.set('v.upvote', true);
+           
     },
     
-	downVoteHandler : function(component, event, helper) {
-        if(component.get('v.upvote')){
-        	component.set('v.upvote', false);    
+    downVoteHandler : function(component, event, helper) {
+        
+        var targetElement = event.target;
+        
+        if(event.target.classList.contains("upvoteIconNeutral")){
+            $A.util.removeClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.addClass(targetElement,"upvoteIconBlue");
+            if(event.target.previousSibling.classList.contains("upvoteIconNeutral")){
+                $A.util.addClass(event.target.previousSibling,"upvoteIconNeutral"); 
+                $A.util.removeClass(event.target.previousSibling,"upvoteIconBlue");
+            }
+        }else if(event.target.classList.contains("upvoteIconBlue")){
+            $A.util.addClass(targetElement,"upvoteIconNeutral"); 
+            $A.util.removeClass(targetElement,"upvoteIconBlue"); 
+        }else{
+            
         }
-        component.set('v.downvote', true);
-    }
+       
+    },
 })

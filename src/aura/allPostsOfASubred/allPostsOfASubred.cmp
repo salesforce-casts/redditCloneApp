@@ -2,23 +2,23 @@
                 implements="force:appHostable,lightning:isUrlAddressable">
     
     <aura:attribute name="subredId" type="Id" />
-    <aura:attribute name="allSubredPosts" type="post__c" />
+    <aura:attribute name="allSubredPosts" type="post__c[]" />
     
     <aura:attribute name="upvote" type="Boolean" default="false"/>
     <aura:attribute name="downvote" type="Boolean" default="false" />
-   
+    
     <aura:handler name="change" value="{!v.subredId}" action="{!c.doChange}" />
     
     <aura:iteration items="{!v.allSubredPosts}" var="post">
         <lightning:card footer="">
             <div class="upAndDownVote">
-                <lightning:buttonIconStateful iconName="utility:chevronup" aura:id="upvote"
-                                              alternativeText="upvote" class="upvoteCustom"
-                                              selected="{!v.upvote}" onclick="{!c.upVoteHandler}" />
+                <div onclick="{!c.upVoteHandler}" data-id="{!post.Id}" class="upvoteIconNeutral">
+                    <lightning:icon iconName="utility:chevronup" size="x-small" />
+                </div>
                 
-                <lightning:buttonIconStateful iconName="utility:chevrondown" aura:id="downvote"
-                                              alternativeText="downvote" class="downvoteCustom"
-                                              selected="{!v.downvote}" onclick="{!c.downVoteHandler}" />
+                <div onclick="{!c.downVoteHandler}" data-id="{!post.Id}" class="upvoteIconNeutral">
+                    <lightning:icon iconName="utility:chevrondown" size="x-small" />
+                </div>
             </div>
             {!post.Name} <br/>
             {!post.Title__c} <br/>
