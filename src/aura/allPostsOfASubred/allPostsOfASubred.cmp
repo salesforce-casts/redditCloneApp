@@ -2,33 +2,38 @@
                 implements="force:appHostable,lightning:isUrlAddressable">
     
     <aura:attribute name="subredId" type="Id" />
-    <aura:attribute name="allSubredPosts" type="post__c" />
+    <aura:attribute name="allSubredPosts" type="post__c[]" />
     
     <aura:attribute name="upvote" type="Boolean" default="false"/>
     <aura:attribute name="downvote" type="Boolean" default="false" />
     
     <aura:handler name="change" value="{!v.subredId}" action="{!c.doChange}" />
-    <div aura:id="main">
-        <aura:iteration items="{!v.allSubredPosts}" var="post">
-            <lightning:card footer="">
-                <div class="upAndDownVote">
-                    <div onclick="{!c.upVoteHandler}" data-id="{!post.Id}" aura:id="upvote" class="upvoteIconNeutral"> 
-                        <lightning:icon iconName="utility:chevronup" size="x-small" />
+    
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_9-of-12 slds-m-top_large">
+            <aura:iteration items="{!v.allSubredPosts}" var="post">
+                <lightning:card footer="">
+                    <div class="upAndDownVote">
+                        <div onclick="{!c.upVoteHandler}" data-id="{!post.Id}" class="upvoteIconNeutral">
+                            <lightning:icon iconName="utility:chevronup" size="x-small" />
+                        </div>
+                        
+                        <div onclick="{!c.downVoteHandler}" data-id="{!post.Id}" class="upvoteIconNeutral">
+                            <lightning:icon iconName="utility:chevrondown" size="x-small" />
+                        </div>
                     </div>
-                    
-                    <div onclick="{!c.downVoteHandler}" data-id="{!post.Id}" aura:id="downvote" class="upvoteIconNeutral"> 
-                        <lightning:icon iconName="utility:chevrondown" size="x-small" />
-                    </div>
-                    
-                   
-                </div>
-                <div onclick="{!c.openPostPopup}" data-id="{!post.Id}">
-                    <a>{!post.Name}</a>
-                </div>
-                {!post.Title__c} <br/>
-                {!post.body__c} <br/>
-            </lightning:card>
-        </aura:iteration>
+                    {!post.Name} <br/>
+                    {!post.Title__c} <br/>
+                    {!post.body__c} <br/>
+                </lightning:card>
+            </aura:iteration> 
+        </div>
+        <div class="slds-col slds-size_3-of-12">
+            <c:allPostsSearch />
+        </div>
     </div>
-    <c:postDetailsPopup />
+    
+    
+    
 </aura:component>
