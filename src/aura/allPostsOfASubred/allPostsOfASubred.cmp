@@ -8,7 +8,6 @@
     <aura:attribute name="downvote" type="Boolean" default="false" />
     
     <aura:handler name="change" value="{!v.subredId}" action="{!c.doChange}" />
-<<<<<<< Updated upstream
     <div aura:id="main">
         <aura:iteration items="{!v.allSubredPosts}" var="post">
             <lightning:card footer="">
@@ -28,9 +27,7 @@
             </lightning:card>
         </aura:iteration>
     </div>
-=======
-    
-    <c:allPostsSearch />
+
     
     <aura:iteration items="{!v.allSubredPosts}" var="post">
         <lightning:card footer="">
@@ -48,6 +45,5 @@
             {!post.body__c} <br/>
         </lightning:card>
     </aura:iteration> 
->>>>>>> Stashed changes
     
 </aura:component>
