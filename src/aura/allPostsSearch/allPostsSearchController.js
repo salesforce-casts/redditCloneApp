@@ -1,28 +1,42 @@
 ({
-    
-    
-    getPostsViaSearch : function(component, event, helper) {
+    getPostsViaSearch : function(cmp, event, helper) {
         
-        var action = component.get("c.getPostsViaSearchController");		
-        var queryTerm = component.get('v.query');
-        
-        action.setParams({
-            query: component.get("v.query")         
+        var action = cmp.get("c.getPostsViaSearchController");
+        action.setParams({ 
+            query: cmp.get("v.query") 
         });
         
-        action.setCallback(this, function(response){
+        
+        action.setCallback(this, function(response) {
             var state = response.getState();
-            if(state === "SUCCESS"){
-                var result = response.getReturnValue();                
-				component.set("v.searchPosts", result);
+            if (state === "SUCCESS") {
+                var result = response.getReturnValue();
+                cmp.set("v.searchPosts", result);
                 
-                var searchArea = component.find('searchArea');
+                console.log(' 💥 ' + result);
+                
+                var searchArea = cmp.find("searchArea");
                 $A.util.removeClass(searchArea, 'slds-hide');
-            }else{
+            }
+            else if (state === "INCOMPLETE") {
                 
             }
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
         });
         
-        $A.enqueueAction(action);    
+        
+        $A.enqueueAction(action);
+        
+        
     }
 })
